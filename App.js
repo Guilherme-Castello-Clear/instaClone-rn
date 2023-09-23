@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, View} from 'react-native';
+import Header from './src/components/Header';
 
-export default props => {
-  <View>
-    <Text>App Runing</Text>
-  </View>;
-};
+export default class App extends Component {
+  Render() {
+    <Header />;
+  }
+}
