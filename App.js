@@ -5,7 +5,7 @@ import Post from './src/components/Post';
 
 export default class App extends Component {
   Render() {
-    <View>
+    <View style={{flex: 1}}>
       <Header />;
       <Post image={require('./assets/imgs/fence.jpg')} />
     </View>;
