@@ -5,9 +5,21 @@ import Post from './src/components/Post';
 
 export default class App extends Component {
   Render() {
-    <View style={{flex: 1}}>
-      <Header />;
-      <Post image={require('./assets/imgs/fence.jpg')} />
-    </View>;
+    const comments = [
+      {
+        nickname: 'Castello',
+        comment: 'Brabo mlkao',
+      },
+      {
+        nickname: 'Elis',
+        comment: 'Faço melhor',
+      },
+    ];
+    return (
+      <View style={{flex: 1}}>
+        <Header />;
+        <Post image={require('./assets/imgs/fence.jpg')} comments={comments} />
+      </View>
+    );
   }
 }
