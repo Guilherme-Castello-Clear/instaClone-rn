@@ -24,6 +24,7 @@ export const logout = () => {
 
 export const createUser = user => {
   return dispatch => {
+    dispatch(loadingUser());
     axios
       .post(`${authBaseURL}/signupNewUser?key=${API_KEY}`, {
         email: user.email,
@@ -42,8 +43,11 @@ export const createUser = user => {
             .catch(err => {
               console.log(err);
             })
-            .then(() => {
-              console.log('Cadastrado');
+            .then(res => {
+              delete user.password;
+              user.id = res.data.localId;
+              dispatch(userLogged(user));
+              dispatch(userLoaded());
             });
         }
       });
