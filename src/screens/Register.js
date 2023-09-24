@@ -82,5 +82,4 @@ const mapDispatchToProps = dispatch => {
     onCreateUser: user => dispatch(createUser(user)),
   };
 };
-
 export default connect(null, mapDispatchToProps)(Register);
