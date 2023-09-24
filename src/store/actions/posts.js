@@ -4,6 +4,7 @@ import {
   CREATING_POST,
   POST_CREATED,
 } from './actionTypes';
+import {setMessage} from './message';
 import axios from 'axios';
 
 export const addPost = post => {
@@ -17,14 +18,26 @@ export const addPost = post => {
         image: post.image.base64,
       },
     })
-      .catch(err => {
-        console.log(err);
+      .catch(_ => {
+        dispatch(
+          setMessage({
+            title: 'Erro',
+            text: 'Ocorreu um erro',
+          }),
+        );
       })
       .then(resp => {
         post.image = resp.data.imageUrl;
         axios
           .post('/posts.json', {...post})
-          .catch(err => console.log(err))
+          .catch(err => {
+            dispatch(
+              setMessage({
+                title: 'Erro',
+                text: err,
+              }),
+            );
+          })
           .then(res => {
             dispatch(fetchPosts());
             dispatch(postCreated());
