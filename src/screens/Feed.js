@@ -2,36 +2,9 @@ import React, {Component} from 'react';
 import {StyleSheet, FlatList, View} from 'react-native';
 import Header from '../components/Header';
 import Post from '../components/Post';
+import {connect} from 'react-redux';
 
 class Feed extends Component {
-  state = {
-    posts: [
-      {
-        id: Math.random(),
-        nickname: 'Castello',
-        email: 'g@c.com',
-        image: require('../../assets/imgs/fence,jpg'),
-        comments: [
-          {
-            nickname: 'FulanoA',
-            comment: 'legal',
-          },
-          {
-            nickname: 'FulanoB',
-            comment: 'legal B',
-          },
-        ],
-      },
-      {
-        id: Math.random(),
-        nickname: 'Castello',
-        email: 'g@c.com',
-        image: require('../../assets/imgs/fence,jpg'),
-        comments: [],
-      },
-    ],
-  };
-
   render() {
     return (
       <View style={styles.container}>
@@ -55,4 +28,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Feed;
+const mapStateToProps = ({posts}) => {
+  return {
+    posts: posts.posts,
+  };
+};
+
+export default connect(mapStateToProps)(Feed);
