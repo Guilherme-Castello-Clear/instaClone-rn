@@ -18,5 +18,43 @@ const storage = new Storage({
   keyFilename: 'instaClone.json',
 });
 exports.uploadImage = onRequest((request, response) => {
-  cors(request, response, () => {});
+  cors(request, response, () => {
+    try {
+      fs.writeFileSync('/tmp/imageToSave.jpg', request.body.image, 'base64');
+
+      const bucket = storage.bucket('instaclone-1cd6e.appspot.com');
+      const id = uuid();
+      bucket.upload(
+        '/tmp/imageToSave.jpg',
+        {
+          uploadType: 'media',
+          destination: `/posts/${id}.jpg`,
+          metadata: {
+            metadata: {
+              contentType: 'image/jpeg',
+              firebaseStorageDownloadTokens: id,
+            },
+          },
+        },
+        (err, file) => {
+          if (err) {
+            return response.status(500).json({error: err});
+          } else {
+            const fileName = encodeURIComponent(file.name);
+            const imageUrl =
+              'https://firebasestorage.googleapis.com/v0/b/' +
+              bucket.name +
+              '/o/' +
+              fileName +
+              '?alt=media&token=' +
+              id;
+            return response.status(201).json({imageUrl: imageUrl});
+          }
+        },
+      );
+    } catch (err) {
+      console.log(err);
+      return response.status(500).json({error: err});
+    }
+  });
 });
