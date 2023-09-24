@@ -24,6 +24,10 @@ class AddPhoto extends Component {
   };
 
   pickImage = () => {
+    if (!this.props.name) {
+      Alert.alert('Falha!', noUser);
+      return;
+    }
     ImagePicker.showImagePicker(
       {
         title: 'Escolha a imagem',
@@ -39,6 +43,10 @@ class AddPhoto extends Component {
   };
 
   save = async () => {
+    if (!this.props.name) {
+      Alert.alert('Falha!', noUser);
+      return;
+    }
     this.props.onAddPost({
       id: Math.random(),
       nickname: this.props.name,
@@ -67,6 +75,7 @@ class AddPhoto extends Component {
             <Text style={styles.buttomText}>Escolha a foto</Text>
           </TouchableOpacity>
           <TextInput
+            editable={this.props.name != null}
             placeholder="Algum comentário para a foto?"
             style={styles.input}
             value={this.state.comment}
